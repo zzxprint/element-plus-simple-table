@@ -1,8 +1,9 @@
 <!-- components/SimpleTable.vue -->
 <template>
   <el-table
-    :data="data"
     style="width: 100%"
+    v-bind="$attrs"
+    :data="data"
   >
     <template v-for="column in props.columns" :key="column">
       <RenderTableColumn v-bind="column" />
@@ -23,7 +24,7 @@ const RenderTableColumn = (column: any) => {
       {{
         default: (scope: any) => {
           if (column.render) return column.render(scope)
-          return column.prop
+          return scope.row[column.prop]
         },
         header: () => {
           if (column.headerRender) return column.headerRender(column)
